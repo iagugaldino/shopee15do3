@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "titulo": "JadLog",
+        "descricao": "Receba em até 2 dias úteis",
+        "preco": 19.50,
+        "dias": 2,
+        "logo": "https://logospng.org/download/jadlog/logo-jadlog-icon-1024.png"
+    },
+    {
+        "id": 2,
+        "titulo": "Sedex-Express",
+        "descricao": "Receba em até 4 dias úteis",
+        "preco": 12.5,
+        "dias": 4,
+        "logo": "https://logodownload.org/wp-content/uploads/2017/03/sedex-logo-1.png"
+    },
+    {
+        "id": 3,
+        "titulo": "Correio",
+        "descricao": "Receba em até  7 dias úteis",
+        "preco": 0.0,
+        "dias": 7,
+        "logo": "https://logodownload.org/wp-content/uploads/2014/05/correios-logo-1-1.png"
+    }
+]

